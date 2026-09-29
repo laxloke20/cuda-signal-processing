@@ -1,0 +1,18 @@
+CUDA Batch Signal Processing Project
+GPU: Tesla T4
+Signals: 256
+Samples per signal: 8192
+Total samples: 2097152
+Moving-average window: 9
+Input size: 8.00 MiB
+
+Generating synthetic noisy signal dataset...
+Copying 2097152 samples to GPU...
+Running moving-average CUDA kernel...
+Running signal-difference CUDA kernel...
+
+GPU processing completed.
+Kernel time: 131.810 ms
+Total samples processed: 2097152
+CPU/GPU validation max error: 0.000e+00
+Results saved to: output/processed_samples.csv
