@@ -68,13 +68,17 @@ chmod +x run.sh
 output/execution.log
 ```
 
-A representative subset of processed samples is saved to:
+The program also generates:
 
 ```text
 output/processed_samples.csv
 ```
 
-The CSV intentionally contains only a small representative subset so the repository does not need to store millions of rows. The execution log records the total number of samples processed in the full GPU workload.
+A committed representative sample from the real execution is available as:
+
+```text
+output/processed_samples_preview.csv
+```
 
 ## Default workload
 
@@ -84,17 +88,18 @@ The CSV intentionally contains only a small representative subset so the reposit
 - Filter window: 9 samples
 - CUDA threads per block: 256
 
-## Expected output
+## Verified execution
 
-A successful run prints information similar to:
+The project was executed successfully on a **Tesla T4 GPU** using the default workload.
 
 ```text
 CUDA Batch Signal Processing Project
-GPU: NVIDIA L4
+GPU: Tesla T4
 Signals: 256
 Samples per signal: 8192
 Total samples: 2097152
 Moving-average window: 9
+Input size: 8.00 MiB
 
 Generating synthetic noisy signal dataset...
 Copying 2097152 samples to GPU...
@@ -102,13 +107,13 @@ Running moving-average CUDA kernel...
 Running signal-difference CUDA kernel...
 
 GPU processing completed.
-Kernel time: ...
+Kernel time: 131.810 ms
 Total samples processed: 2097152
-CPU/GPU validation max error: ...
+CPU/GPU validation max error: 0.000e+00
 Results saved to: output/processed_samples.csv
 ```
 
-Exact timing depends on the GPU.
+This run processed more than two million samples in one execution and produced a CPU/GPU validation maximum error of zero for the verified subset.
 
 ## Dataset
 
@@ -133,14 +138,15 @@ The project also demonstrates that GPU kernels are most useful when the workload
 ## Repository contents
 
 ```text
-signal_processing.cu         CUDA kernels and host application
-Makefile                     Build and clean targets
-run.sh                       Reproducible build/run script
-output/execution.log         Proof of execution after running
-output/processed_samples.csv Representative processed values
-screenshots/                 Optional screenshots of execution
+signal_processing.cu                  CUDA kernels and host application
+Makefile                              Build and clean targets
+run.sh                                Reproducible build/run script
+run_in_colab.ipynb                    Google Colab GPU runner
+output/execution.log                  Tesla T4 execution proof
+output/processed_samples_preview.csv  Representative processed values
+screenshots/                          Optional screenshots of execution
 ```
 
 ## Course submission description
 
-This project implements a CUDA-based batch signal-processing pipeline. It processes hundreds of independent noisy signals in a single execution. A moving-average CUDA kernel performs denoising, and a second CUDA kernel calculates sample-to-sample differences for feature extraction. The default configuration processes more than two million signal samples. The program includes command-line configuration, CUDA event timing, CPU/GPU correctness validation, CSV output, a Makefile, and a reproducible run script.
+This project implements a CUDA-based batch signal-processing pipeline. It processes hundreds of independent noisy signals in a single execution. A moving-average CUDA kernel performs denoising, and a second CUDA kernel calculates sample-to-sample differences for feature extraction. The default configuration processes more than two million signal samples. The program includes command-line configuration, CUDA event timing, CPU/GPU correctness validation, CSV output, a Makefile, a reproducible run script, and committed proof of execution on a Tesla T4 GPU.
